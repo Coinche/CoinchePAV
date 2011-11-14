@@ -1,6 +1,7 @@
 #ifndef ANNONCE_H
 #define ANNONCE_H
 
+#include <vector>
 #include "types.h"
 
 class Annonce {
@@ -11,5 +12,8 @@ public:
 	Annonce(Hauteur h, Couleur c);
 	bool operator>( const Annonce& annonce); //on compare simplement les hauteurs des 2 annonces.
 };
+
+//chaque joueur stocke la liste de ses annonces pendant les encheres ("boites d'encheres" du bridge)
+typedef vector<Annonce> Encheres;
 
 #endif //ANNONCE_H
