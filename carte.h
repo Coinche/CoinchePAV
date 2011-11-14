@@ -15,7 +15,7 @@ public:
 // Pli et Main sont differents semantiquement (dans le diagramme UML), meme si en fait derriere c'est la meme classe.
 // les typedef sont la pour clarifier la suite.
 //eventuellement, si on trouve ca mieux, on peut remplacer vector par list sans rien casser ailleurs (si c'est bien code)
-typedef vector<Carte> Pli;
-typedef vector<Carte> Main;
+typedef std::vector<Carte> Pli;
+typedef std::vector<Carte> Main;
 
 #endif //CARTE_H
