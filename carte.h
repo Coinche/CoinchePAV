@@ -5,11 +5,17 @@
 #include "types.h"
 
 class Carte {
+private:
+        Valeur  valeur;
+        Couleur couleur;
+
 public:
-	// les attributs publics sont const pour ne pas qu'un joueur puisse modifier ses cartes
-	Valeur const valeur;
-	Couleur const couleur;
-	Carte(Valeur, Couleur); //constructeur
+        // les attributs publics sont const pour ne pas qu'un joueur puisse modifier ses cartes
+
+        Carte(Valeur, Couleur); //constructeur
+        Carte(const Carte& carte); //constructeur par copie
+        Valeur get_valeur() const;
+        Couleur get_couleur() const;
 };
 
 // Pli et Main sont differents semantiquement (dans le diagramme UML), meme si en fait derriere c'est la meme classe.
