@@ -24,4 +24,7 @@ public:
 typedef std::vector<Carte> Pli;
 typedef std::vector<Carte> Main;
 
+bool operator==( const Carte& carte1, const Carte & carte2); //on compare simplement.
+bool operator==(const Main &main1, const Main &main2);
+
 #endif //CARTE_H

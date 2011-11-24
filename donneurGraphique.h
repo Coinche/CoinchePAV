@@ -8,8 +8,8 @@
 //et compiler la partie metier seule (sous forme de librarie statique)
 class DonneurGraphique {
 public:
-	void Rafraichir(const Annonce&);
-	void Rafraichir(const Pli&);
+	virtual void rafraichir(const Annonce&, int joueur) = 0;
+	virtual void rafraichir(const Pli&, int joueur) = 0;
 };
 
 #endif //DONNEUR_GRAPHIQUE_H

@@ -406,7 +406,7 @@ bool T_REGLES::test150_egalitecarte(){
 
 
 	try{
-		if(Regles::egalite(valetdecarreau, roidecarreau) != false || Regles::egalite(valetdecarreau, Carte( VALET , CARREAU))  != true )
+		if(valetdecarreau == roidecarreau || !(valetdecarreau == Carte( VALET, CARREAU)))
 		{
             std::cout << "ERREUR : problème avec la méthode egalite( carte, carte ) " << std::endl;
 			outfile << "test150_egalitecarte : " << "ERREUR : problème avec la méthode egalite( carte, carte ) " << std::endl;
@@ -457,9 +457,9 @@ bool T_REGLES::test160_egalitemain(){
 
 	try{
 
-	    bool reponse1 = Regles::egalite(mainjoueur,maindifferente); // doit renvoyer false
-	    bool reponse2 = Regles::egalite(mainjoueur,mainjoueurdansunautreordre); // doit renvoyer true
-	    bool reponse3 = Regles::egalite(mainjoueur,mainpluspetite); // doit renvoyer false
+	    bool reponse1 = (mainjoueur == maindifferente); // doit renvoyer false
+	    bool reponse2 = (mainjoueur == mainjoueurdansunautreordre); // doit renvoyer true
+	    bool reponse3 = (mainjoueur == mainpluspetite); // doit renvoyer false
 	    bool bonne_reponse = ~reponse1 && reponse2 && ~reponse3;
 
 		if( bonne_reponse != true )
@@ -524,9 +524,9 @@ bool T_REGLES::test200_valides(){
 		Main mainsortieCARREAU = Regles::valides(mainjoueur, CARREAU, plipli);
 		Main mainsortiePIQUE = Regles::valides(mainjoueur, PIQUE, plipli);
 		Main mainsortieTREFLE = Regles::valides(mainjoueur, TREFLE, plipli);
-		bool testcarreau = Regles::egalite(mainsortieCARREAU, MainvalideCARREAU);
-		bool testpique = Regles::egalite(mainsortiePIQUE, MainvalidePIQUE);
-		bool testtrefle = Regles::egalite(mainsortieTREFLE, MainvalideTREFLE);
+		bool testcarreau = (mainsortieCARREAU == MainvalideCARREAU);
+		bool testpique = (mainsortiePIQUE == MainvalidePIQUE);
+		bool testtrefle = (mainsortieTREFLE == MainvalideTREFLE);
 		if( testcarreau && testpique && testtrefle  )
 		{
 			std::cout << "ERREUR : problème avec la méthode valides( Main, atout, pli ). " << std::endl;

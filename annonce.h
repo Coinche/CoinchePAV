@@ -1,6 +1,7 @@
 #ifndef ANNONCE_H
 #define ANNONCE_H
 
+#include<vector>
 #include "types.h"
 
 class Annonce {
@@ -11,5 +12,7 @@ public:
 	Annonce(Hauteur h, Couleur c);
 	bool operator>( const Annonce& annonce); //on compare simplement les hauteurs des 2 annonces.
 };
+
+typedef std::vector<Annonce> Encheres;
 
 #endif //ANNONCE_H

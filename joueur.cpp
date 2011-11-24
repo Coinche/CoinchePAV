@@ -2,27 +2,23 @@
 
 Annonce Joueur::annoncer()
 {
-	Annonce tmp = reflechirEtAnnoncer();
-	encheres.push_back(tmp);
-	return tmp;
+	return reflechirEtAnnoncer();
 }
 
 Carte Joueur::jouer()
 {
-	return reflechirEtJouer();
+	int index = reflechirEtJouer();
+	Carte tmp = main[index];
+	main.erase(index);
+	return tmp;
 }
 
-Encheres Joueur::encheres() const
+Main Joueur::get_main() const
 {
-	return encheres;
-}
-
-Main Joueur::mmain() const
-{
-	return mmain;
+	return main;
 }
 
 void Joueur::recevoirMain(const Main& nouvelleMain)
 {
-	mmain = nouvelleMain;
+	main = nouvelleMain;
 }

@@ -8,7 +8,7 @@
 //et compiler la partie metier seule (sous forme de librarie statique)
 class JoueurGraphique {
 public:
-	virtual Annonce annoncer(const Annonce&) = 0;
+	virtual Annonce annoncer(const Encheres&) = 0;
 	virtual Carte jouer(const Main&) = 0;
 };
 
