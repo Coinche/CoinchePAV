@@ -65,7 +65,7 @@ bool T_ANNONCE::test100_objet(){
 
 
 	try{
-		if( pj.couleur != CARREAU || pj.hauteur != QUATRE_VINGT )
+		if( pj.get_couleur() != CARREAU || pj.get_hauteur() != QUATRE_VINGT )
 		{
 			std::cout << "ERREUR : problème d'assignation " << std::endl;
 			outfile << "test100_objet : " << "ERREUR : problème d'assignation " << std::endl;

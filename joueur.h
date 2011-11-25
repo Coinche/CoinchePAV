@@ -15,10 +15,10 @@ public:
 private:
 	 //methode abstraite. pour un homme, c'est une methode vide.
 	 //pour une IA, c'est la que se situent les algos.
-	virtual Annonce reflechirEtAnnoncer(const Annonce&) = 0;
+	virtual Annonce reflechirEtAnnoncer();
 	//methode abstraite. pour un homme, c'est une methode vide.
 	 //pour une IA, c'est la que se situent les algos.
-	virtual int reflechirEtJouer(const Annonce&) = 0;
+	virtual int reflechirEtJouer();
 	Main main;
 };
 
