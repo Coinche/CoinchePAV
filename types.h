@@ -9,7 +9,21 @@ enum Couleur {
 	COEUR
 };
 
-
+inline Couleur int2Couleur(int i)
+{
+	switch(i)
+	{
+		case 0:
+			return TREFLE;break;
+		case 1:
+			return CARREAU;break;
+		case 2:
+			return PIQUE;break;
+		case 3:
+			return COEUR;break;
+		default:return TREFLE;
+	}
+};
 
 enum Valeur {
 	SEPT,
@@ -20,6 +34,30 @@ enum Valeur {
 	DAME,
 	ROI,
 	AS
+};
+
+inline Valeur int2Valeur(int i)
+{
+	switch(i)
+	{
+		case 0:
+			return SEPT;break;
+		case 1:
+			return HUIT;break;
+		case 2:
+			return NEUF;break;
+		case 3:
+			return DIX;break;
+		case 4:
+			return VALET;break;
+		case 5:
+			return DAME;break;
+		case 6:
+			return ROI;break;
+		case 7:
+			return AS;break;
+		default:return SEPT;
+	}
 };
 
 //une enum et pas un simple int pour s'assurer que l'annonce est une dizaine.

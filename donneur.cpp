@@ -1,5 +1,7 @@
 #include "donneur.h"
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 
@@ -14,7 +16,6 @@ Donneur::Donneur(Joueur *joueur0, Joueur *joueur1, Joueur *joueur2, Joueur *joue
 
 void Donneur::jouerUnTour()
 {
-	melanger();
 	distribuer();
 	int joueurCourant=premier;
 	while(encheresEnCours())
@@ -38,8 +39,32 @@ void Donneur::jouerUnTour()
 	}*/
 }
 
-void Donneur::melanger(){}
-void Donneur::distribuer(){}
+void Donneur::melanger()
+{
+	plisRamasses.clear();
+	Pli jeuComplet;
+	for(int i=0; i<4; i++)
+		for(int j=0; j<8; j++)
+			jeuComplet.push_back(Carte(int2Valeur(j),int2Couleur(i)));
+	
+	random_shuffle(jeuComplet.begin(), jeuComplet.end());
+	plisRamasses.swap(jeuComplet);
+}
+
+void Donneur::distribuer()
+{
+	Main distrib[4];
+	if(plisRamasses.size() != 8) //derniere partie non jouee, on melange
+		melanger();
+	rotate(plisRamasses.begin(), plisRamasses.begin()+1+rand()%31, plisRamasses.end()); //on coupe par permutation circulaire
+	for(int i=0; i<8;i++)
+	{
+		for(int j=0; j<4; j++)
+			distrib[j].push_back(plisRamasses[4*i+j]);
+	}
+	for(int i=0; i<4; i++)
+		joueurs[(i+premier)%4]->recevoirMain(distrib[i]);
+}
 
 bool Donneur::encheresEnCours()
 {

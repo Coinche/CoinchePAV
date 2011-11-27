@@ -17,6 +17,7 @@ public:
 private:
 	void melanger();
 	void distribuer();
+	
 	//...
 	
 	//attributs
@@ -25,6 +26,7 @@ private:
 	int premier; // joueurs[premier] pointe vers le joueur qui joue en premier ce tour
 	bool encheresEnCours();
 	Encheres encheres;
+	Pli plisRamasses;
 };
 
 typedef Donneur Doner; //pour la blague
