@@ -13,12 +13,25 @@ Donneur::Donneur(Joueur *joueur0, Joueur *joueur1, Joueur *joueur2, Joueur *joue
 	joueurs[2]=joueur2;
 	joueurs[3]=joueur3;
 	premier=0;
+	scores[0]=0;
+	scores[1]=0;
+	scores_tmp[0]=0;
+	scores_tmp[1]=0;
 }
 
 void Donneur::jouerUnTour()
 {
 	distribuer();
+	cout << "distribution finie" << endl;
 	int joueurCourant=premier;
+	
+	//! Attention debug!!! FIXME
+	encheres.push_back(Annonce(QUATRE_VINGT, TREFLE));
+	encheres.push_back(Annonce(PASSE, PIQUE));
+	encheres.push_back(Annonce(PASSE, PIQUE));
+	encheres.push_back(Annonce(PASSE, PIQUE));
+	//!
+	
 	while(encheresEnCours())
 	{
 		encheres.push_back(joueurs[joueurCourant]->annoncer());
@@ -26,16 +39,21 @@ void Donneur::jouerUnTour()
 		if(joueurCourant == 4) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 		cout << joueurCourant << endl;
 	}
-	//! Attention debug!!! FIXME
-	encheres.push_back(Annonce(CAPOT, TREFLE));
-	//!
-	atout = encheres.back().get_couleur();
+	atout = (encheres.end()-5)->get_couleur();
+	
+	
+	cout << "encheres finies: pris a " << atout << endl;
 	
 	for(int pli=0; pli<8; pli++)
 	{
+		cout << "pli " << pli << endl;
+		
 		jouerUnPli();
+		
+		cout << "scores : " << scores_tmp[0] << " " << scores_tmp[1] << endl << endl;
 	}
 	compter();
+	cout << "score global : " << scores[0] << " " << scores[1] << endl << endl;
 }
 
 void Donneur::melanger()
@@ -48,7 +66,7 @@ void Donneur::melanger()
 			jeuComplet.push_back(Carte(int2Valeur(j),int2Couleur(i)));//!DEGUEU
 	
 	random_shuffle(jeuComplet.begin(), jeuComplet.end());
-	copy(jeuComplet.begin(), jeuComplet.end(), plisRamasses.begin());
+	plisRamasses = jeuComplet;
 }
 
 void Donneur::distribuer()
@@ -78,12 +96,13 @@ bool Donneur::encheresEnCours() const
 	else
 	{
 		cout << "coucou" << endl;
-		for(int i=size-4; i<=size; i++)
+		for(int i=size-4; i<size; i++)
 		{
 			if(encheres[i].get_hauteur() != PASSE)
 				encheresFinies = false;
 		}
-		return encheresFinies;
+		cout << encheresFinies << endl;
+		return !encheresFinies;
 	}
 }
 
@@ -120,14 +139,14 @@ void Donneur::jouerUnPli()
 		scores_tmp[premier%2] += Regles::valeur(pliEnCours, atout);
 	else
 		scores_tmp[1 - premier%2] += Regles::valeur(pliEnCours, atout);
-		
+	
 	//donneurGraphique->ramasserPli();
 }
 
 void Donneur::compter()
 {
 	int attaque = (premier + encheres.size() - 1) % 2;
-	int pointsAnnonces = (encheres.end()-4)->get_hauteur();
+	unsigned int pointsAnnonces = (encheres.end()-5)->get_hauteur();
 	if(scores_tmp[attaque]>= pointsAnnonces)
 		scores[attaque] += pointsAnnonces;
 	else

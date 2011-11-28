@@ -1,7 +1,9 @@
 #include "mmain.h"
 #include <algorithm>
 
-Main::Main(){}
+using namespace std;
+
+Main::Main():conteneur(){}
 
 Main::~Main(){}
 

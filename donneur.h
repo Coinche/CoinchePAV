@@ -24,8 +24,8 @@ private:
 	
 	//attributs
 	Joueur* joueurs[4] ; //le donneur doit pouvoir appeler les joueurs
-	int scores[2];//scores[0] est le score des joueurs pairs
-	int scores_tmp[2];
+	unsigned int scores[2];//scores[0] est le score des joueurs pairs
+	unsigned int scores_tmp[2];
 	//DonneurGraphique* donneurGraphique; //le donneur doit commander le rafraichissement de l'UI
 	int premier; // joueurs[premier] pointe vers le joueur qui joue en premier ce tour
 	Couleur atout;
