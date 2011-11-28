@@ -9,7 +9,7 @@ Carte Joueur::jouer(const Main& valides)
 {
 	int index = reflechirEtJouer(valides);
 	Carte tmp = main[index];
-	main.erase(main.begin() + index);
+	main.enlever(tmp);
 	return tmp;
 }
 

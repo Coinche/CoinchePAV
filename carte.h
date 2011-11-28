@@ -4,6 +4,7 @@
 #include <vector>
 #include "types.h"
 
+
 class Carte {
 private:
         Valeur  valeur;
@@ -23,10 +24,10 @@ public:
 // les typedef sont la pour clarifier la suite.
 //eventuellement, si on trouve ca mieux, on peut remplacer vector par list sans rien casser ailleurs (si c'est bien code)
 typedef std::vector<Carte> Pli;
-typedef std::vector<Carte> Main;
+//typedef std::vector<Carte> Main;
 
 bool operator==( const Carte &carte1, const Carte &carte2); //on compare simplement.
-bool operator==(const Main &main1, const Main &main2);
 
+#include "mmain.h"
 
 #endif //CARTE_H

@@ -64,7 +64,7 @@ void Donneur::distribuer()
 	}
 	for(int i=0; i<4; i++)
 	{
-		sort(distrib[i].begin(), distrib[i].end(), Carte::triParCouleur);
+		distrib[i].trierParCouleur();
 		joueurs[(i+premier)%4]->recevoirMain(distrib[i]);
 	}
 }
