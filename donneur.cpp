@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
+#include "regles.h"
 
 using namespace std;
 
@@ -25,30 +26,29 @@ void Donneur::jouerUnTour()
 		if(joueurCourant == 4) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 		cout << joueurCourant << endl;
 	}
-	/*joueurCourant=premier;
-	Carte carteCourante;
+	//! Attention debug!!! FIXME
+	encheres.push_back(Annonce(CAPOT, TREFLE));
+	//!
+	atout = encheres.back().get_couleur();
+	
 	for(int pli=0; pli<8; pli++)
 	{
-		for(int i=0; i<4; i++)
-		{
-			carteCourante = joueurs[joueurCourant]->jouer();
-			donneurGraphique->rafraichir(carteCourante, joueurCourant);
-			joueurCourant = (joueurCourant + 1 ) % 4; // incrementation modulo 4
-		}
-		
-	}*/
+		jouerUnPli();
+	}
+	compter();
 }
 
 void Donneur::melanger()
 {
 	plisRamasses.clear();
 	Pli jeuComplet;
+	//on genere un jeu de 32 cartes
 	for(int i=0; i<4; i++)
 		for(int j=0; j<8; j++)
-			jeuComplet.push_back(Carte(int2Valeur(j),int2Couleur(i)));
+			jeuComplet.push_back(Carte(int2Valeur(j),int2Couleur(i)));//!DEGUEU
 	
 	random_shuffle(jeuComplet.begin(), jeuComplet.end());
-	plisRamasses.swap(jeuComplet);
+	copy(jeuComplet.begin(), jeuComplet.end(), plisRamasses.begin());
 }
 
 void Donneur::distribuer()
@@ -63,10 +63,13 @@ void Donneur::distribuer()
 			distrib[j].push_back(plisRamasses[4*i+j]);
 	}
 	for(int i=0; i<4; i++)
+	{
+		sort(distrib[i].begin(), distrib[i].end(), Carte::triParCouleur);
 		joueurs[(i+premier)%4]->recevoirMain(distrib[i]);
+	}
 }
 
-bool Donneur::encheresEnCours()
+bool Donneur::encheresEnCours() const
 {
 	bool encheresFinies=true;
 	int size = encheres.size();
@@ -82,4 +85,53 @@ bool Donneur::encheresEnCours()
 		}
 		return encheresFinies;
 	}
+}
+
+void Donneur::jouerUnPli()
+{
+	int joueurCourant = premier;
+	Pli pliEnCours;
+	
+	for(int i=0; i<4; i++)
+	{
+		Main valide = Regles::valides(
+			joueurs[joueurCourant]->get_main(),
+			encheres.back().get_couleur(),
+			pliEnCours
+		);
+		pliEnCours.push_back(joueurs[joueurCourant]->jouer(valide));
+		
+		
+		
+		cout << joueurCourant << " : " << pliEnCours.back().get_valeur() << " " <<pliEnCours.back().get_couleur() << endl;
+		
+		plisRamasses.push_back(pliEnCours.back());
+		//donneurGraphique->rafraichir(carteCourante, joueurCourant);
+		if(joueurCourant == 4) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
+	}
+	
+	Pli::iterator maitre=pliEnCours.begin();
+	
+	for(Pli::iterator it=pliEnCours.begin(); it < pliEnCours.end(); it++)
+		if(Regles::comparer(*maitre,*it,atout)==0)
+			maitre=it;
+			
+	if(maitre == pliEnCours.begin() || maitre == pliEnCours.begin() + 2)
+		scores_tmp[premier%2] += Regles::valeur(pliEnCours, atout);
+	else
+		scores_tmp[1 - premier%2] += Regles::valeur(pliEnCours, atout);
+		
+	//donneurGraphique->ramasserPli();
+}
+
+void Donneur::compter()
+{
+	int attaque = (premier + encheres.size() - 1) % 2;
+	int pointsAnnonces = (encheres.end()-4)->get_hauteur();
+	if(scores_tmp[attaque]>= pointsAnnonces)
+		scores[attaque] += pointsAnnonces;
+	else
+		scores[1-attaque] += pointsAnnonces;
+	
+	scores_tmp[0]=scores_tmp[1]=0;
 }

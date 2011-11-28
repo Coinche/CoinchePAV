@@ -39,7 +39,7 @@ bool operator==(const Main &main1, const Main &main2)
             bool reponsecarte = false;
             for (unsigned int index2 = 0; index2<main2.size(); index2++)
             {
-                reponsecarte|=(main1[index1]==main2[index2]);
+                reponsecarte|=( main1[index1] ==main2[index2] );
             }
             reponse&=reponsecarte;
             index1++;
@@ -48,4 +48,12 @@ bool operator==(const Main &main1, const Main &main2)
         return reponse;
 	}
 
+}
+
+bool Carte::triParCouleur(const Carte &carte1, const Carte &carte2)
+{
+	if(carte1.get_couleur() == carte2.get_couleur())
+		return (carte1.get_valeur()<=carte2.get_valeur());
+	else
+		return (carte1.get_couleur()<=carte2.get_couleur());
 }

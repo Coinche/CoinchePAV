@@ -69,6 +69,9 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 
  Main Regles::valides(const Main& main, const Couleur& atout, const Pli& pliEnCours)
 {
+	//test 0: la carte est la premiere du pli
+	if(pliEnCours.empty()) return main;
+	
 	Couleur couleurdupli = pliEnCours[0].get_couleur() ;
 	int taillepli=pliEnCours.size();
     int taillemain=main.size();

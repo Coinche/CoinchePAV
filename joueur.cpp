@@ -5,9 +5,9 @@ Annonce Joueur::annoncer()
 	return reflechirEtAnnoncer();
 }
 
-Carte Joueur::jouer()
+Carte Joueur::jouer(const Main& valides)
 {
-	int index = reflechirEtJouer();
+	int index = reflechirEtJouer(valides);
 	Carte tmp = main[index];
 	main.erase(main.begin() + index);
 	return tmp;
@@ -28,4 +28,4 @@ Annonce Joueur::reflechirEtAnnoncer()
 	return Annonce(PASSE, COEUR);
 }
 
-int Joueur::reflechirEtJouer(){return 1;}
+int Joueur::reflechirEtJouer(const Main& valides){return 0;}
