@@ -1,26 +1,46 @@
 #include "donneur.h"
 #include <iostream>
 #include <algorithm>
-#include <cstdlib>
+#include <cmath>
+#include <ctime>
 #include "regles.h"
 
 using namespace std;
 
-Donneur::Donneur(Joueur *joueur0, Joueur *joueur1, Joueur *joueur2, Joueur *joueur3)
+
+
+void Donneur::init()
 {
-	joueurs[0]=joueur0;
-	joueurs[1]=joueur1;
-	joueurs[2]=joueur2;
-	joueurs[3]=joueur3;
 	premier=0;
+	srand(time(NULL));
 	scores[0]=0;
 	scores[1]=0;
 	scores_tmp[0]=0;
 	scores_tmp[1]=0;
 }
 
+Donneur::Donneur(Joueur *joueur0, Joueur *joueur1, Joueur *joueur2, Joueur *joueur3)
+{
+	init();
+	set_joueurs(joueur0, joueur1, joueur2, joueur3);
+}
+
+void Donneur::set_joueurs(Joueur *joueur0, Joueur *joueur1, Joueur *joueur2, Joueur *joueur3)
+{
+	joueurs[0] = joueur0;
+	joueurs[1] = joueur1;
+	joueurs[2] = joueur2;
+	joueurs[3] = joueur3;
+}
+
+Main Donneur::get_main(int joueur)
+{
+	return joueurs[(premier+joueur)%4]->get_main();
+}
+
 void Donneur::jouerUnTour()
 {
+	cout << "score initial :" << scores[0] << " " << scores[1] << endl;
 	distribuer();
 	cout << "distribution finie" << endl;
 	int joueurCourant=premier;
@@ -31,6 +51,7 @@ void Donneur::jouerUnTour()
 	encheres.push_back(Annonce(PASSE, PIQUE));
 	encheres.push_back(Annonce(PASSE, PIQUE));
 	//!
+	
 	
 	while(encheresEnCours())
 	{
@@ -43,6 +64,7 @@ void Donneur::jouerUnTour()
 	
 	
 	cout << "encheres finies: pris a " << atout << endl;
+	cout << char(10);
 	
 	for(int pli=0; pli<8; pli++)
 	{
@@ -146,7 +168,7 @@ void Donneur::jouerUnPli()
 void Donneur::compter()
 {
 	int attaque = (premier + encheres.size() - 1) % 2;
-	unsigned int pointsAnnonces = (encheres.end()-5)->get_hauteur();
+	int pointsAnnonces = (encheres.end()-5)->get_hauteur();
 	if(scores_tmp[attaque]>= pointsAnnonces)
 		scores[attaque] += pointsAnnonces;
 	else
