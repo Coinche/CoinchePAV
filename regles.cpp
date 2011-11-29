@@ -87,21 +87,21 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			//1er test : la carte est un atout
 			bool t1 = (carte.get_couleur() == atout) ? 1 : 0 ;
 
-			//2�me test : la carte est dans la couleur demand�e
+			//2�me test : la carte est dans la couleur demandee
 			bool t2 = (carte.get_couleur() == couleurdupli) ? 1 : 0 ;
 
-			//3�me test : le partenaire est ma�tre
+			//3�me test : le partenaire est maitre
 			bool t3 = 0;
-			if( taillepli > 1 ) // teste si le partenaire a d�ja jou�
+			if( taillepli > 1 ) // teste si le partenaire a deja joue
 			{
 				t3=1;
 				Carte Partenaire = pliEnCours[ taillepli - 2 ];
 				for(int j=0; j<taillepli; j++)
 				{
 					if( (j!=taillepli-2) && (comparer(Partenaire, pliEnCours[j], atout) != 1) )
-					// verfie que le partenaire est ma�tre
-					//NB : si i==taillepli-2, le programme sort de la boucle sans evaluer le second �l�ment de la condition,
-					// � notre plus grand bonheur puisque comparer( carte, carte, atout ) renvoie 0 lorsque les cartes en entr�e sont �gales.
+					// verfie que le partenaire est maitre
+					//NB : si i==taillepli-2, le programme sort de la boucle sans evaluer le second element de la condition,
+					// a notre plus grand bonheur puisque comparer( carte, carte, atout ) renvoie 0 lorsque les cartes en entree sont egales.
 					{
 						t3=0;
 					}
@@ -113,7 +113,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			int incr4=0;
 			while( incr4<taillemain && ~t4 )
 			{
-				if(main[incr4].get_couleur() == atout )//c'est pas main[incr4] et taillemain dans le while?
+				if(main[incr4].get_couleur() == atout )
 				{
 					t4=1;
 				}
@@ -123,7 +123,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			bool t5=0;
 			for(int k=0; k<taillemain; k++)
 			{
-				if(main[k].get_couleur() == couleurdupli )//alors je comprend pas
+				if(main[k].get_couleur() == couleurdupli )
 				{
 					t5=1;
 				}
@@ -155,7 +155,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			            atoutLePlusFortdeLaMain = mainatout[j];
 			        }
 			    }
-
+                //on refait le test 6, mais cette fois-ci avec l'atout le plus fort de la main
                 while(incr7<taillepli && t7 )
                 {
 				if( (incr7!=taillepli-2) &&  (comparer(atoutLePlusFortdeLaMain, pliEnCours[incr7], atout) != 1) )
@@ -164,22 +164,19 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 				}
 				incr7++;
                 }
-			}
+			 }
 
-            /*
-			while(incr7<taillemain && t7 )//Ce test est bizarre, ya incr6, et carte c'est pas main[i]? il aurait fallu comparer pliEnCours[incr] et main[incr7] donc une autre boucle?
-			{
-
-
-				if( (incr7!=i) && (main[incr7].get_couleur() == atout) && (comparer(carte, main[incr7], atout) != 1) )
-				{
-					t7=0;
-				}
-				incr7++;
-			}
-			*/
-
-		// Selon les r�sultats des tests, renvoyez oui ou non. Pour cela on parcours le graphe.
+		//Selon les resultats des tests, renvoyez oui ou non. Pour cela on parcours la procédure suivante :
+		//La carte n'est pas un atout, le joueur peut la jouer si :
+        //         - elle est de la couleur demandee
+        //         - la partenaire est maître donc le joueur n'est pas obligé de couper
+        //         - elle n'est pas de couleur demandee mais le joueur n'a plus d'atout et n'a plus de carte de la couleur demandee
+        //La carte est un atout :
+        //         - la couleur demandee n'est pas de l'atout, le joueur peut la jouer si :
+        //              -- le joueur n'a plus de cartes de la couleur demandée et il ne peut (ou n'a pas besoin ) de monter à l'atout
+        //         - la couleur demandee est de l'atout, le joueur peut la jouer si :
+        //              -- la carte est plus forte que tous les atouts deposes
+        //              -- le joueur ne peux pas monter au-dessus du plus grand atout du pli
 		switch(t1)
 		{
 			case 0 : // la carte n'est pas un atout
@@ -219,9 +216,9 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 					}
 					case 1 : // la carte est un atout et la couleur est de l'atout
 					{
- 						 // dans ce cas, le test 5 ( "reste-t-il une carte de la couleur demand�e ?")  vaut obligatoirement 1.
+ 						 // dans ce cas, le test 5 ( "reste-t-il une carte de la couleur demandee ?")  vaut obligatoirement 1.
 						if(t6) mainvalide.push_back(carte); //la carte est plus forte que toutes les autres cartes.
-							else // on va tester si le joueur doit "monter � l'atout".
+							else // on va tester si le joueur doit "monter a l'atout".
 							{
 								if(t7 == false)
 								{
