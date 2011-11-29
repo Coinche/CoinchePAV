@@ -1,17 +1,6 @@
 Début du débogage
     Test de la classe Annonce
-        Test du constructeur.
-        Test de la validité de l'objet.
-        Test de la méthode de comparaison.
     Test de la classe Carte
-        Test du constructeur.
-        Test de la methode get_valeur().
-        Test de la methode get_valeur().
-        Test de la validité de l'objet.
+    Test de la classe Main
     Test de la classe Regles
-        Test de la methode valeur( carte, atout ).
-        Test de la methode valeur( pli, atout ).
-        Test de la methode egalite( carte, carte).
-        Test de la methode egalite( carte, carte ).
-        Test de la methode egalite( main , main ).
 Fin du débogage

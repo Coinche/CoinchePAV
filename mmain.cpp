@@ -5,8 +5,6 @@ using namespace std;
 
 Main::Main():conteneur(){}
 
-Main::~Main(){}
-
 Main::Main(const Main& Main)
 : conteneur(Main.conteneur)
 {}
@@ -27,7 +25,7 @@ void Main::trierParCouleur()
 	sort(conteneur.begin(), conteneur.end(), Carte::triParCouleur);
 }
 
-Main Main::extraire(Couleur couleur)
+Main Main::extraire(Couleur couleur) const
 {
 	Main resultat;
 	for(unsigned int i=0; i<conteneur.size(); i++)
@@ -42,7 +40,7 @@ bool Main::contient(const Carte &carte) const
 		conteneur.begin(),
 		conteneur.end(),
 		carte
-		) == 0 );
+		) != 0 );
 }
 
 bool operator==(const Main &main1, const Main &main2)

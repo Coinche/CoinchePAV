@@ -13,6 +13,9 @@ public:
     //Méthodes
 
     static int comparer(const Carte& carte1, const Carte& carte2, const Couleur& atout);
+    //Renvoie :
+        // 1 si carte1>carte2
+        // 0 si carte1<carte2
     static Main valides(const Main& main, const Couleur& atout, const Pli& pliEnCours); //type de retour à voir plus tard
     static int valeur(const Carte& carte, const Couleur& atout);
 	static int valeur(const Pli& pli,  const Couleur& atout);

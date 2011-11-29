@@ -4,7 +4,6 @@
 #include <vector>
 #include "types.h"
 
-
 class Carte {
 private:
         Valeur  valeur;
