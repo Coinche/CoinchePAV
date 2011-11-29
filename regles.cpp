@@ -71,7 +71,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 {
 	//test 0: la carte est la premiere du pli
 	if(pliEnCours.empty()) return main;
-	
+
 	Couleur couleurdupli = pliEnCours[0].get_couleur() ;
 	int taillepli=pliEnCours.size();
     int taillemain=main.size();
@@ -98,7 +98,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 				Carte Partenaire = pliEnCours[ taillepli - 2 ];
 				for(int j=0; j<taillepli; j++)
 				{
-					if( (j!=taillepli-2) && (comparer(Partenaire, pliEnCours[j], atout)==0) )
+					if( (j!=taillepli-2) && (comparer(Partenaire, pliEnCours[j], atout) != 1) )
 					// verfie que le partenaire est ma�tre
 					//NB : si i==taillepli-2, le programme sort de la boucle sans evaluer le second �l�ment de la condition,
 					// � notre plus grand bonheur puisque comparer( carte, carte, atout ) renvoie 0 lorsque les cartes en entr�e sont �gales.
@@ -111,19 +111,19 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			//4�me test : il reste des atouts dans la main
 			bool t4= (t1) ? 1 : 0;
 			int incr4=0;
-			while( incr4<taillepli && ~t4 )
+			while( incr4<taillemain && ~t4 )
 			{
-				if(pliEnCours[i].get_couleur() == atout )//c'est pas main[incr4] et taillemain dans le while?
+				if(main[incr4].get_couleur() == atout )//c'est pas main[incr4] et taillemain dans le while?
 				{
 					t4=1;
 				}
 				incr4++;
 			}
-			//5�me test : il reste des cartes de m�me couleur dans la main
+			//5�me test : il reste des cartes de la couleur demandee dans la main
 			bool t5=0;
-			for(int k=0; k<taillepli; k++)
+			for(int k=0; k<taillemain; k++)
 			{
-				if(pliEnCours[k].get_couleur() == carte.get_couleur() )// pareil ou alors je comprend pas
+				if(main[k].get_couleur() == couleurdupli )//alors je comprend pas
 				{
 					t5=1;
 				}
@@ -142,14 +142,42 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			//7�me test : il existe un atout plus fort que ceux dans le pli dans la main.
 			bool t7=1;
 			int incr7=0;
-			while(incr7<taillemain && t7 )//Ce test est bizarre, ya incr6, et carte c'est pas main[i]? il aurait fallu comparer pliEnCours[incr] et main[incr7] donc une autre boucle? 
+
+			Main mainatout = main.extraire(atout);
+			if(mainatout.empty()) t7 = 0;
+			else{
+
+			    Carte atoutLePlusFortdeLaMain(SEPT,atout); // initialisée a la plus petite valeur possible
+			    for(unsigned int j=0; j<mainatout.size();j++ )
+			    {
+			        if(comparer(mainatout[j],atoutLePlusFortdeLaMain,atout) == 1 )
+			        {
+			            atoutLePlusFortdeLaMain = mainatout[j];
+			        }
+			    }
+
+                while(incr7<taillepli && t7 )
+                {
+				if( (incr7!=taillepli-2) &&  (comparer(atoutLePlusFortdeLaMain, pliEnCours[incr7], atout) != 1) )
+				{
+					t7=0;
+				}
+				incr7++;
+                }
+			}
+
+            /*
+			while(incr7<taillemain && t7 )//Ce test est bizarre, ya incr6, et carte c'est pas main[i]? il aurait fallu comparer pliEnCours[incr] et main[incr7] donc une autre boucle?
 			{
-				if( (incr6!=taillemain-2) && (main[incr7].get_couleur() == atout) && (comparer(carte, main[i], atout) != 1) )
+
+
+				if( (incr7!=i) && (main[incr7].get_couleur() == atout) && (comparer(carte, main[incr7], atout) != 1) )
 				{
 					t7=0;
 				}
 				incr7++;
 			}
+			*/
 
 		// Selon les r�sultats des tests, renvoyez oui ou non. Pour cela on parcours le graphe.
 		switch(t1)
@@ -162,7 +190,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 					if(t3) mainvalide.push_back(carte); //le partenaire est maitre donc la carte est jouable / faudrait pas tester t5 en meme temps?
 					else
 					{
-						if(t4 == false) mainvalide.push_back(carte);
+						if(t4 == false && t5 == false) mainvalide.push_back(carte);
                         // il reste des atouts dans la main : la carte n'est pas jouable
                         // le joueur n'a plus d'atouts : il peut se d�fausser avec n'importe qu'elle carte.
 					}
