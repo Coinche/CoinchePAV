@@ -6,7 +6,7 @@
 
 class Joueur {
 public:
-	Annonce annoncer();
+	Annonce annoncer(const Encheres &encheres);
 	Carte jouer(Couleur atout, const Pli &pliEnCours);
 	//si on le lui demande, le joueur doit dire quelles cartes il lui reste.
 	Main get_main() const;  //privée et amie avec Donneur?? peut-etre un peu trop keke dans un premier temps
@@ -15,7 +15,7 @@ public:
 private:
 	 //methode abstraite. pour un homme, c'est une methode vide.
 	 //pour une IA, c'est la que se situent les algos.
-	virtual Annonce reflechirEtAnnoncer();
+	virtual Annonce reflechirEtAnnoncer(const std::pair<std::vector<Couleur>, std::vector<Hauteur> > &possibles);
 	//methode abstraite. pour un homme, c'est une methode vide.
 	 //pour une IA, c'est la que se situent les algos.
 	virtual int reflechirEtJouer(const Main&);

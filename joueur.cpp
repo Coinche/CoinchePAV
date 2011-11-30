@@ -3,9 +3,10 @@
 
 using namespace std;
 
-Annonce Joueur::annoncer()
+Annonce Joueur::annoncer(const Encheres &encheres)
 {
-	return reflechirEtAnnoncer();
+	std::pair<std::vector<Couleur>, std::vector<Hauteur> > possibles = Regles::AnnoncesPossibles(encheres);
+	return reflechirEtAnnoncer(possibles);
 }
 
 Carte Joueur::jouer(Couleur atout,const Pli &pliEnCours)
@@ -31,7 +32,7 @@ void Joueur::recevoirMain(const Main& nouvelleMain)
 	main = nouvelleMain;
 }
 
-Annonce Joueur::reflechirEtAnnoncer()
+Annonce Joueur::reflechirEtAnnoncer(const std::pair<std::vector<Couleur>, std::vector<Hauteur> > &possibles)
 {
 	return Annonce(PASSE, COEUR);
 }

@@ -40,13 +40,11 @@ Main Donneur::get_main(int joueur)
 
 void Donneur::jouerUnTour()
 {
-	cout << "score initial :" << scores[0] << " " << scores[1] << endl;
 	distribuer();
-	cout << "distribution finie" << endl;
 	int joueurCourant=premier;
 	
 	//! Attention debug!!! FIXME
-	encheres.push_back(Annonce(QUATRE_VINGT, TREFLE));
+	encheres.push_back(Annonce(CAPOT, TREFLE));
 	encheres.push_back(Annonce(PASSE, PIQUE));
 	encheres.push_back(Annonce(PASSE, PIQUE));
 	encheres.push_back(Annonce(PASSE, PIQUE));
@@ -55,32 +53,20 @@ void Donneur::jouerUnTour()
 	
 	while(Regles::AnnoncesPossibles(encheres).first.size()!=0)
 	{
-		encheres.push_back(joueurs[joueurCourant]->annoncer());
+		encheres.push_back(joueurs[joueurCourant]->annoncer(encheres));
 		//donneurGraphique->rafraichir(encheres.back(), joueurCourant);
-		if(joueurCourant == 4) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
-		cout << joueurCourant << endl;
+		if(joueurCourant == 3) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 	}
 	atout = (encheres.end()-5)->get_couleur();
-	
-	
-	cout << "encheres finies: pris a " << atout << endl;
-	cout << char(10);
-	
-	compterLaBelote(joueurCourant);
+	compterLaBelote(joueurCourant-1);
 	joueurCourant=premier;
 	
 	for(int pli=0; pli<8; pli++)
 	{
-		cout << "pli " << pli << endl;
-		
 		joueurCourant = jouerUnPli(joueurCourant);
-		
-		cout << "scores : " << scores_tmp[0] << " " << scores_tmp[1] << endl << endl;
 	}
 	scores_tmp[joueurCourant%2]+=10; //dix de der
-	cout << "scores : " << scores_tmp[0] << " " << scores_tmp[1] << endl << endl;
 	compter();
-	cout << "score global : " << scores[0] << " " << scores[1] << endl << endl;
 }
 
 void Donneur::melanger()
@@ -114,25 +100,6 @@ void Donneur::distribuer()
 	}
 }
 
-bool Donneur::encheresEnCours() const
-{
-	bool encheresFinies=true;
-	int size = encheres.size();
-	if(size<4)
-		return true;
-	else
-	{
-		cout << "coucou" << endl;
-		for(int i=size-4; i<size; i++)
-		{
-			if(encheres[i].get_hauteur() != PASSE)
-				encheresFinies = false;
-		}
-		cout << encheresFinies << endl;
-		return !encheresFinies;
-	}
-}
-
 int Donneur::jouerUnPli(int entame)
 {
 	int joueurCourant = entame;
@@ -141,10 +108,6 @@ int Donneur::jouerUnPli(int entame)
 	for(int i=0; i<4; i++)
 	{
 		pliEnCours.push_back(joueurs[joueurCourant]->jouer(atout, pliEnCours));
-		
-		
-		
-		cout << joueurCourant << " : " << pliEnCours.back().get_valeur() << " " <<pliEnCours.back().get_couleur() << endl;
 		
 		plisRamasses.push_back(pliEnCours.back());
 		//donneurGraphique->rafraichir(carteCourante, joueurCourant);
@@ -175,13 +138,19 @@ int Donneur::get_maitre(const Pli& pliEnCours)
 void Donneur::compter()
 {
 	int attaque = (premier + encheres.size() - 1) % 2;
-	int pointsAnnonces = (encheres.end()-5)->get_hauteur();
-	if(scores_tmp[attaque]>= pointsAnnonces)
+	int defense = 1 - attaque;
+	Hauteur pointsAnnonces = (encheres.end()-5)->get_hauteur();
+	if(pointsAnnonces == CAPOT && scores_tmp[defense] == 0)
+		scores[attaque] += pointsAnnonces;
+	else if(pointsAnnonces == CAPOT && scores_tmp[defense] != 0)
+		scores[defense] += pointsAnnonces;
+	else if(pointsAnnonces != CAPOT && scores_tmp[attaque]>= pointsAnnonces)
 		scores[attaque] += pointsAnnonces;
 	else
-		scores[1-attaque] += pointsAnnonces;
+		scores[defense] += pointsAnnonces;
 	
-	scores_tmp[0]=scores_tmp[1]=0;
+	scores_tmp[0]=0;
+	scores_tmp[1]=0;
 }
 
 void Donneur::compterLaBelote(int joueurCourant)

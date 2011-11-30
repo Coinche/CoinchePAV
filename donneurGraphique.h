@@ -8,8 +8,8 @@
 //et compiler la partie metier seule (sous forme de librarie statique)
 class DonneurGraphique {
 public:
-	virtual void afficherAnnonce(int joueur, const Annonce&) = 0;
-	virtual void afficherCarte(int joueur, const Carte& ) = 0;
+	virtual void afficherAnnonce(int joueur, const Annonce& annonce) = 0;
+	virtual void afficherCarte(int joueur, const Carte& carte) = 0;
 	virtual void ramasserPli() = 0;
 };
 

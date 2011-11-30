@@ -24,7 +24,6 @@ private:
 	void distribuer();
 	int jouerUnPli(int entame);
 	void compter();
-	bool encheresEnCours() const;
 	int get_maitre(const Pli& pliEnCours);
 	void compterLaBelote(int joueurCourant);
 	//...

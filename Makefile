@@ -1,4 +1,4 @@
-test.exe: annonce.o carte.o debugage.o donneur.o joueur.o main.o mmain.o regles.o
+test.exe: annonce.o carte.o debugage.o donneur.o joueur.o main.o mmain.o regles.o joueurHumain.o
 	g++ -Wall -o test.exe *.o
 
 annonce.o: types.h
@@ -9,7 +9,7 @@ joueur.o: carte.h annonce.h
 main.o: types.h annonce.h debugage.h donneur.h
 mmain.o: carte.h
 regles.o: types.h carte.h
-
+joueurHumain.o: mmain.h annonce.h joueur.h joueurhumaingraphique.h
 %.o:%.cpp %.h
 	g++ -Wall -c -o $@ $<
 	
