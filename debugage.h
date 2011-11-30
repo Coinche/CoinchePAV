@@ -6,6 +6,7 @@
 #include "regles.h"
 #include "carte.h"
 #include "mmain.h"
+#include "donneur.h"
 
 
 class Debugage {
@@ -15,6 +16,8 @@ public:
 	static bool test_T_CARTE();
 	static bool test_T_MMAIN();
 	static bool test_T_REGLES();
+	static bool test_T_DONNEUR();
+
 private:
 
 };

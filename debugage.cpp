@@ -196,6 +196,23 @@ bool Debugage::test_T_REGLES(){
 	bool status = true;
 
 	try{
+	    //methode Annonces Possibles
+	    Encheres encherActuelles;
+	    encherActuelles.push_back(Annonce(QUATRE_VINGT,COEUR));
+	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
+	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
+	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
+        std::pair<std::vector<Couleur>, std::vector<Hauteur> > annoncesSorties = Regles::AnnoncesPossibles(encherActuelles);
+	    for(unsigned int i=0; i<annoncesSorties.first.size(); i++)
+	    {
+	        assert(annoncesSorties.first[i] != COEUR);
+	    }
+	    for(unsigned int j=0; j<annoncesSorties.second.size(); j++)
+	    {
+	        assert(annoncesSorties.second[j] > QUATRE_VINGT);
+	    }
+
+
 		//méthode valeur(carte)
 		Carte valetdecarreau(VALET, CARREAU);
 		Carte nefledecoeur(NEUF, COEUR);
@@ -273,4 +290,42 @@ bool Debugage::test_T_REGLES(){
 	return status;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//T_DONNEUR
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+bool Debugage::test_T_DONNEUR(){
 
+    // Visualisations
+	std::string tab ( "    ");
+	std::ofstream outfile ("log.txt",std::ios_base::app);
+	outfile << tab <<"Test de la classe Regles" << std::endl;
+
+	std::cout << tab << "Test de la classe Regles" << std::endl;
+
+	//Tests
+	bool status = true;
+
+	try{
+        Doner kebab(new Joueur, new Joueur, new Joueur, new Joueur);
+        kebab.jouerUnTour();
+
+
+	}
+	catch(std::exception const& e){
+		std::cerr << "ERREUR : " << e.what() << std::endl;
+		outfile << "testRegles: " << "ERREUR : " << e.what() << std::endl;
+		status = false;
+	}
+	outfile.close();
+	if(status)
+	{
+	    std::cout << tab << "T_REGLES : Le test s'est déroulé sans problème" << std::endl;
+	}
+    else
+    {
+        std::cout << tab << "T_REGLES Le test à détecté des problèmes. Voir le fichier log.txt" << std::endl;
+    }
+
+	return status;
+
+}
