@@ -66,14 +66,19 @@ void Donneur::jouerUnTour()
 	cout << "encheres finies: pris a " << atout << endl;
 	cout << char(10);
 	
+	compterLaBelote(joueurCourant);
+	joueurCourant=premier;
+	
 	for(int pli=0; pli<8; pli++)
 	{
 		cout << "pli " << pli << endl;
 		
-		jouerUnPli();
+		joueurCourant = jouerUnPli(joueurCourant);
 		
 		cout << "scores : " << scores_tmp[0] << " " << scores_tmp[1] << endl << endl;
 	}
+	scores_tmp[joueurCourant%2]+=10; //dix de der
+	cout << "scores : " << scores_tmp[0] << " " << scores_tmp[1] << endl << endl;
 	compter();
 	cout << "score global : " << scores[0] << " " << scores[1] << endl << endl;
 }
@@ -128,19 +133,14 @@ bool Donneur::encheresEnCours() const
 	}
 }
 
-void Donneur::jouerUnPli()
+int Donneur::jouerUnPli(int entame)
 {
-	int joueurCourant = premier;
+	int joueurCourant = entame;
 	Pli pliEnCours;
 	
 	for(int i=0; i<4; i++)
 	{
-		Main valide = Regles::valides(
-			joueurs[joueurCourant]->get_main(),
-			encheres.back().get_couleur(),
-			pliEnCours
-		);
-		pliEnCours.push_back(joueurs[joueurCourant]->jouer(valide));
+		pliEnCours.push_back(joueurs[joueurCourant]->jouer(atout, pliEnCours));
 		
 		
 		
@@ -148,21 +148,28 @@ void Donneur::jouerUnPli()
 		
 		plisRamasses.push_back(pliEnCours.back());
 		//donneurGraphique->rafraichir(carteCourante, joueurCourant);
-		if(joueurCourant == 4) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
+		if(joueurCourant == 3) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 	}
 	
-	Pli::iterator maitre=pliEnCours.begin();
+	int maitre_index = get_maitre(pliEnCours);
 	
-	for(Pli::iterator it=pliEnCours.begin(); it < pliEnCours.end(); it++)
-		if(Regles::comparer(*maitre,*it,atout)==0)
-			maitre=it;
-			
-	if(maitre == pliEnCours.begin() || maitre == pliEnCours.begin() + 2)
+	if(maitre_index%2 == 0)
 		scores_tmp[premier%2] += Regles::valeur(pliEnCours, atout);
 	else
 		scores_tmp[1 - premier%2] += Regles::valeur(pliEnCours, atout);
 	
+	return maitre_index;
 	//donneurGraphique->ramasserPli();
+}
+
+int Donneur::get_maitre(const Pli& pliEnCours)
+{
+	Pli::const_iterator maitre=pliEnCours.begin();
+	for(Pli::const_iterator it=pliEnCours.begin(); it < pliEnCours.end(); it++)
+		if(Regles::comparer(*maitre,*it,atout)==0)
+			maitre=it;
+			
+	return (maitre - pliEnCours.begin());
 }
 
 void Donneur::compter()
@@ -175,4 +182,13 @@ void Donneur::compter()
 		scores[1-attaque] += pointsAnnonces;
 	
 	scores_tmp[0]=scores_tmp[1]=0;
+}
+
+void Donneur::compterLaBelote(int joueurCourant)
+{
+	for(int i = 0; i<4; i+=2)
+		if(joueurs[(joueurCourant+i)%4]->get_main().contient(Carte(DAME,atout))
+		&& joueurs[(joueurCourant+i)%4]->get_main().contient(Carte(ROI,atout))
+		)
+			scores_tmp[joueurCourant%2]+=20;
 }

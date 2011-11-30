@@ -22,9 +22,11 @@ private:
 	void init(); //initialisations communes aux deux constructeurs
 	void melanger();
 	void distribuer();
-	void jouerUnPli();
+	int jouerUnPli(int entame);
 	void compter();
 	bool encheresEnCours() const;
+	int get_maitre(const Pli& pliEnCours);
+	void compterLaBelote(int joueurCourant);
 	//...
 	
 	//attributs
