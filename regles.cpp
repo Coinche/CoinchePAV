@@ -1,5 +1,6 @@
 #include "regles.h"
 #include <algorithm>
+#include <iostream>
 
 
 //M�thodes
@@ -265,40 +266,46 @@ std::pair<std::vector<Couleur>, std::vector<Hauteur> > Regles::AnnoncesPossibles
 
     if(encheresEnCours.size()>3)
     {
-        bool test_passe = ( encheresEnCours[encheresEnCours.size()].get_hauteur() == PASSE  );
-        bool test_passe2 = ( encheresEnCours[encheresEnCours.size()-1].get_hauteur() == PASSE  );
-        bool test_passe3 = ( encheresEnCours[encheresEnCours.size()-2].get_hauteur() == PASSE  );
-        bool test_passe4 = ( encheresEnCours[encheresEnCours.size()-3].get_hauteur() == PASSE  );
+        bool test_passe = ( encheresEnCours[encheresEnCours.size()-1].get_hauteur() == PASSE  );
+        bool test_passe2 = ( encheresEnCours[encheresEnCours.size()-2].get_hauteur() == PASSE  );
+        bool test_passe3 = ( encheresEnCours[encheresEnCours.size()-3].get_hauteur() == PASSE  );
+        bool test_passe4 = ( encheresEnCours[encheresEnCours.size()-4].get_hauteur() == PASSE  );
 
         if (test_passe && test_passe2 && test_passe3 && test_passe4)
         {
+			
             return output; //vecteurs vides
         }
-        if (test_passe && test_passe2 && test_passe3 && !test_passe4 )
+        else if (test_passe && test_passe2 && test_passe3 && !test_passe4 )
         {
-            Couleur couleurInterdite = encheresEnCours[encheresEnCours.size()-3].get_couleur();
+			
+            Couleur couleurInterdite = encheresEnCours[encheresEnCours.size()-4].get_couleur();
             for(unsigned int i=0; i<4; i++)
             {
                 if(couleursDeBase[i] != couleurInterdite) couleurs.push_back(couleursDeBase[i]);
             }
             for(unsigned int j=0; j<12; j++)
             {
-                if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-3].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
+                if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-4].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
             }
-            return output;
+            return make_pair(couleurs, hauteurs);
         }
-        for(unsigned int i=0; i<4; i++)
-        {
-            couleurs.push_back(couleursDeBase[i]);
-        }
-        for(unsigned int j=0; j<12; j++)
-        {
-            if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
-        }
-        return output;
+		else
+		{
+			
+			for(unsigned int i=0; i<4; i++)
+			{
+				couleurs.push_back(couleursDeBase[i]);
+			}
+			for(unsigned int j=0; j<12; j++)
+			{
+				if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
+			}
+			return make_pair(couleurs, hauteurs);
+		}
     }
     else{
-
+		
         for(unsigned int i=0; i<4; i++)
         {
             couleurs.push_back(couleursDeBase[i]);
@@ -307,7 +314,7 @@ std::pair<std::vector<Couleur>, std::vector<Hauteur> > Regles::AnnoncesPossibles
         {
             if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
         }
-        return output;
+        return make_pair(couleurs, hauteurs);
 
     }
 

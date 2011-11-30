@@ -53,7 +53,7 @@ void Donneur::jouerUnTour()
 	//!
 	
 	
-	while(encheresEnCours())
+	while(Regles::AnnoncesPossibles(encheres).first.size()!=0)
 	{
 		encheres.push_back(joueurs[joueurCourant]->annoncer());
 		//donneurGraphique->rafraichir(encheres.back(), joueurCourant);

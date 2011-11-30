@@ -202,7 +202,8 @@ bool Debugage::test_T_REGLES(){
 	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
 	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
 	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
-        std::pair<std::vector<Couleur>, std::vector<Hauteur> > annoncesSorties = Regles::AnnoncesPossibles(encherActuelles);
+        std::pair<std::vector<Couleur>, std::vector<Hauteur> > 	 annoncesSorties = Regles::AnnoncesPossibles(encherActuelles);
+		std::cerr<<annoncesSorties.first.size()<<std::endl;
 	    for(unsigned int i=0; i<annoncesSorties.first.size(); i++)
 	    {
 	        assert(annoncesSorties.first[i] != COEUR);
