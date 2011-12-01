@@ -1,14 +1,22 @@
 #include "joueur.h"
+#include "regles.h"
 
-Annonce Joueur::annoncer()
+using namespace std;
+
+Annonce Joueur::annoncer(const Encheres &encheres)
 {
-	return reflechirEtAnnoncer();
+    std::pair<std::vector<Couleur>, std::vector<Hauteur> > possibles = Regles::AnnoncesPossibles(encheres);
+    return reflechirEtAnnoncer(possibles);
 }
 
-Carte Joueur::jouer(const Main& valides)
+Carte Joueur::jouer(Couleur atout,const Pli &pliEnCours)
 {
-	int index = reflechirEtJouer(valides);
-	Carte tmp = main[index];
+	Main valides = Regles::valides(
+		main,
+		atout,
+		pliEnCours
+	);
+        Carte tmp = reflechirEtJouer(valides);
 	main.enlever(tmp);
 	return tmp;
 }
@@ -22,10 +30,3 @@ void Joueur::recevoirMain(const Main& nouvelleMain)
 {
 	main = nouvelleMain;
 }
-
-Annonce Joueur::reflechirEtAnnoncer()
-{
-	return Annonce(PASSE, COEUR);
-}
-
-int Joueur::reflechirEtJouer(const Main& valides){return 0;}

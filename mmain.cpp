@@ -9,6 +9,14 @@ Main::Main(const Main& Main)
 : conteneur(Main.conteneur)
 {}
 
+Carte& Main::operator[](unsigned int n){return conteneur[n];}
+const Carte& Main::operator[](unsigned int n) const{return conteneur[n];}
+
+void Main::push_back(const Carte& carte){conteneur.push_back(carte);}
+unsigned int Main::size() const {return conteneur.size();}
+bool Main::empty() const {return conteneur.empty();}
+
+
 void Main::enlever(const Carte& carte)
 {
 	conteneur.erase(
@@ -34,7 +42,7 @@ Main Main::extraire(Couleur couleur) const
 	return resultat;
 }
 
-bool Main::contient(const Carte &carte) const
+bool Main::contient(Carte carte) const
 {
 	return ( count(
 		conteneur.begin(),

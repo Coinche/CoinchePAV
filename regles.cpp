@@ -1,5 +1,6 @@
 #include "regles.h"
 #include <algorithm>
+#include <iostream>
 
 
 //M�thodes
@@ -173,7 +174,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
         //         - elle n'est pas de couleur demandee mais le joueur n'a plus d'atout et n'a plus de carte de la couleur demandee
         //La carte est un atout :
         //         - la couleur demandee n'est pas de l'atout, le joueur peut la jouer si :
-        //              -- le joueur n'a plus de cartes de la couleur demandée et il ne peut (ou n'a pas besoin ) de monter à l'atout
+        //              -- le joueur n'a plus de cartes de la couleur demandée et il ne peut (ou n'a pas besoin ) de monter �  l'atout
         //         - la couleur demandee est de l'atout, le joueur peut la jouer si :
         //              -- la carte est plus forte que tous les atouts deposes
         //              -- le joueur ne peux pas monter au-dessus du plus grand atout du pli
@@ -181,10 +182,10 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 		{
 			case 0 : // la carte n'est pas un atout
 			{
-				if(t2) mainvalide.push_back(carte); // la carte est de la couleur demand�e donc jouable
+                                if(t2) mainvalide.push_back(carte); // la carte est de la couleur demandee donc jouable
 				else
 				{
-					if(t3) mainvalide.push_back(carte); //le partenaire est maitre donc la carte est jouable / faudrait pas tester t5 en meme temps?
+                                        if (!t5 && t3) mainvalide.push_back(carte); //le partenaire est maitre donc la carte est jouable / faudrait pas tester t5 en meme temps?
 					else
 					{
 						if(t4 == false && t5 == false) mainvalide.push_back(carte);
@@ -265,50 +266,59 @@ std::pair<std::vector<Couleur>, std::vector<Hauteur> > Regles::AnnoncesPossibles
 
     if(encheresEnCours.size()>3)
     {
-        bool test_passe = ( encheresEnCours[encheresEnCours.size()].get_hauteur() == PASSE  );
-        bool test_passe2 = ( encheresEnCours[encheresEnCours.size()-1].get_hauteur() == PASSE  );
-        bool test_passe3 = ( encheresEnCours[encheresEnCours.size()-2].get_hauteur() == PASSE  );
-        bool test_passe4 = ( encheresEnCours[encheresEnCours.size()-3].get_hauteur() == PASSE  );
+        bool test_passe = ( encheresEnCours[encheresEnCours.size()-1].get_hauteur() == PASSE  );
+        bool test_passe2 = ( encheresEnCours[encheresEnCours.size()-2].get_hauteur() == PASSE  );
+        bool test_passe3 = ( encheresEnCours[encheresEnCours.size()-3].get_hauteur() == PASSE  );
+        bool test_passe4 = ( encheresEnCours[encheresEnCours.size()-4].get_hauteur() == PASSE  );
 
         if (test_passe && test_passe2 && test_passe3 && test_passe4)
         {
+			
             return output; //vecteurs vides
         }
+        hauteurs.push_back(PASSE); //on peut toujours passer! youhou!
         if (test_passe && test_passe2 && test_passe3 && !test_passe4 )
         {
-            Couleur couleurInterdite = encheresEnCours[encheresEnCours.size()-3].get_couleur();
+			
+            Couleur couleurInterdite = encheresEnCours[encheresEnCours.size()-4].get_couleur();
             for(unsigned int i=0; i<4; i++)
             {
                 if(couleursDeBase[i] != couleurInterdite) couleurs.push_back(couleursDeBase[i]);
             }
             for(unsigned int j=0; j<12; j++)
             {
-                if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-3].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
+                if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-4].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
             }
-            return output;
+            output = make_pair(couleurs, hauteurs);
         }
-        for(unsigned int i=0; i<4; i++)
-        {
-            couleurs.push_back(couleursDeBase[i]);
-        }
-        for(unsigned int j=0; j<12; j++)
-        {
-            if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
-        }
-        return output;
+		else
+		{
+			
+			for(unsigned int i=0; i<4; i++)
+			{
+				couleurs.push_back(couleursDeBase[i]);
+			}
+			for(unsigned int j=0; j<12; j++)
+			{
+				if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
+                        }
+                        output = make_pair(couleurs, hauteurs);
+		}
     }
     else{
-
+        hauteurs.push_back(PASSE); //on peut toujours passer! youhou!
         for(unsigned int i=0; i<4; i++)
         {
             couleurs.push_back(couleursDeBase[i]);
         }
         for(unsigned int j=0; j<12; j++)
         {
-            if(hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
+            if(encheresEnCours.empty() || hauteursDeBase[j] > encheresEnCours[encheresEnCours.size()-1].get_hauteur() ) hauteurs.push_back(hauteursDeBase[j]);
         }
-        return output;
+        if(encheresEnCours.empty()) hauteurs.pop_back();//sans encheres, la boucle precedente genere un deuxieme PASSE
+        output = make_pair(couleurs, hauteurs);
 
     }
+    return output;
 
 }
