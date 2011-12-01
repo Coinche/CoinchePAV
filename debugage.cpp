@@ -203,14 +203,14 @@ bool Debugage::test_T_REGLES(){
 	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
 	    encherActuelles.push_back(Annonce(PASSE,CARREAU));
         std::pair<std::vector<Couleur>, std::vector<Hauteur> > 	 annoncesSorties = Regles::AnnoncesPossibles(encherActuelles);
-		std::cerr<<annoncesSorties.first.size()<<std::endl;
+
 	    for(unsigned int i=0; i<annoncesSorties.first.size(); i++)
 	    {
 	        assert(annoncesSorties.first[i] != COEUR);
 	    }
 	    for(unsigned int j=0; j<annoncesSorties.second.size(); j++)
 	    {
-	        assert(annoncesSorties.second[j] > QUATRE_VINGT);
+	        assert(annoncesSorties.second[j] != QUATRE_VINGT);
 	    }
 
 
@@ -271,6 +271,26 @@ bool Debugage::test_T_REGLES(){
 		assert(testpique);
         assert(testtrefle);
 
+        //Verification de la situation où on doit monter à l'atout, bien que le partenaire est maître.
+        Pli plipli2;
+            plipli2.push_back(Carte(HUIT,TREFLE));
+            plipli2.push_back(Carte(ROI,PIQUE));
+
+        Main maindujoueur;
+            maindujoueur.push_back(Carte(DAME,CARREAU));
+            maindujoueur.push_back(Carte(HUIT,PIQUE));
+
+
+        Main mainValideManuel;
+            mainValideManuel.push_back(Carte(DAME,CARREAU));
+            mainValideManuel.push_back(Carte(HUIT,PIQUE));
+
+
+        Main mainvalide = Regles::valides(maindujoueur, CARREAU, plipli2);
+        assert(mainvalide.size() !=0 );
+        assert(mainvalide == mainValideManuel);
+
+
 
 	}
 	catch(std::exception const& e){
@@ -290,45 +310,3 @@ bool Debugage::test_T_REGLES(){
 
 	return status;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//T_DONNEUR
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-bool Debugage::test_T_DONNEUR(){
-
-    // Visualisations
-	std::string tab ( "    ");
-	std::ofstream outfile ("log.txt",std::ios_base::app);
-	outfile << tab <<"Test de la classe Regles" << std::endl;
-
-	std::cout << tab << "Test de la classe Regles" << std::endl;
-
-	//Tests
-	bool status = true;
-
-	try{
-        Doner kebab(new Joueur, new Joueur, new Joueur, new Joueur);
-        kebab.jouerUnTour();
-
-
-	}
-	catch(std::exception const& e){
-		std::cerr << "ERREUR : " << e.what() << std::endl;
-		outfile << "testRegles: " << "ERREUR : " << e.what() << std::endl;
-		status = false;
-	}
-	outfile.close();
-	if(status)
-	{
-	    std::cout << tab << "T_REGLES : Le test s'est déroulé sans problème" << std::endl;
-	}
-    else
-    {
-        std::cout << tab << "T_REGLES Le test à détecté des problèmes. Voir le fichier log.txt" << std::endl;
-    }
-
-	return status;
-
-}
-*/

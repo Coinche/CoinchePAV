@@ -1,30 +1,30 @@
 # depslib dependency file v1.0
-1322424401 source:c:\users\lucas\coinchepav\annonce.cpp
+1322756360 source:c:\users\lucas\coinchepav\annonce.cpp
 	"annonce.h"
 
 1322609792 "
 
-1322424401 c:\users\lucas\coinchepav\annonce.h
+1322756360 c:\users\lucas\coinchepav\annonce.h
 	<vector>
 	"types.h"
 
 1322580675 
 
-1322505541 c:\users\lucas\coinchepav\types.h
+1322756360 c:\users\lucas\coinchepav\types.h
 
-1322505541 source:c:\users\lucas\coinchepav\carte.cpp
+1322756360 source:c:\users\lucas\coinchepav\carte.cpp
 	"carte.h"
 
-1322573014 c:\users\lucas\coinchepav\carte.h
+1322756360 c:\users\lucas\coinchepav\carte.h
 	<vector>
 	"types.h"
 	"mmain.h"
 
-1322605825 c:\users\lucas\coinchepav\mmain.h
+1322756360 c:\users\lucas\coinchepav\mmain.h
 	<vector>
 	"carte.h"
 
-1322607614 source:c:\users\lucas\coinchepav\donneur.cpp
+1322759598 source:c:\users\lucas\coinchepav\donneur.cpp
 	"donneur.h"
 	<iostream>
 	<algorithm>
@@ -32,32 +32,33 @@
 	<ctime>
 	"regles.h"
 
-1322607614 c:\users\lucas\coinchepav\donneur.h
+1322756360 c:\users\lucas\coinchepav\donneur.h
 	"regles.h"
 	"joueur.h"
-	"donneurGraphique.h"
+	"donneurgraphique.h"
 
 1322607614 aphique.h"
 
-1322612254 c:\users\lucas\coinchepav\regles.h
+1322756360 c:\users\lucas\coinchepav\regles.h
 	"types.h"
 	"carte.h"
 	"annonce.h"
 	<map>
 	<vector>
 
-1322584498 c:\users\lucas\coinchepav\joueur.h
+1322756360 c:\users\lucas\coinchepav\joueur.h
 	"carte.h"
 	"annonce.h"
 
-1322497548 c:\users\lucas\coinchepav\donneurgraphique.h
+1322709462 c:\users\lucas\coinchepav\donneurgraphique.h
 	"annonce.h"
 	"carte.h"
 
-1322505541 source:c:\users\lucas\coinchepav\joueur.cpp
+1322756360 source:c:\users\lucas\coinchepav\joueur.cpp
 	"joueur.h"
+	"regles.h"
 
-1322580726 source:c:\users\lucas\coinchepav\joueuria.cpp
+1322762288 source:c:\users\lucas\coinchepav\joueuria.cpp
 	"joueurIA.h"
 	<cstdlib>
 	<ctime>
@@ -65,17 +66,18 @@
 
 1322612357 >
 
-1322580675 c:\users\lucas\coinchepav\joueuria.h
+1322756360 c:\users\lucas\coinchepav\joueuria.h
 	"joueur.h"
 	"carte.h"
 	"annonce.h"
 	"regles.h"
+	"donneur.h"
 
-1322605828 source:c:\users\lucas\coinchepav\mmain.cpp
+1322756360 source:c:\users\lucas\coinchepav\mmain.cpp
 	"mmain.h"
 	<algorithm>
 
-1322612141 source:c:\users\lucas\coinchepav\debugage.cpp
+1322762603 source:c:\users\lucas\coinchepav\debugage.cpp
 	<iostream>
 	<fstream>
 	<exception>
@@ -85,7 +87,7 @@
 
 1322612141 h"
 
-1322612127 c:\users\lucas\coinchepav\debugage.h
+1322756360 c:\users\lucas\coinchepav\debugage.h
 	"types.h"
 	"annonce.h"
 	"regles.h"
@@ -93,17 +95,19 @@
 	"mmain.h"
 	"donneur.h"
 
-1322609792 source:c:\users\lucas\coinchepav\main.cpp
+1322759517 source:c:\users\lucas\coinchepav\main.cpp
 	<iostream>
 	<exception>
 	"types.h"
 	"annonce.h"
 	"debugage.h"
 	"donneur.h"
+	"joueurIA.h"
 
-1322612357 source:c:\users\lucas\coinchepav\regles.cpp
+1322763416 source:c:\users\lucas\coinchepav\regles.cpp
 	"regles.h"
 	<algorithm>
+	<iostream>
 
 1321518838 source:/media/Windows/Users/Lucas/CoinchePAV/main.cpp
 	<QtGui/QApplication>

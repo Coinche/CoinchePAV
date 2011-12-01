@@ -95,18 +95,33 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			bool t3 = 0;
 			if( taillepli > 1 ) // teste si le partenaire a deja joue
 			{
-				t3=1;
+			    t3 =1;
 				Carte Partenaire = pliEnCours[ taillepli - 2 ];
-				for(int j=0; j<taillepli; j++)
-				{
-					if( (j!=taillepli-2) && (comparer(Partenaire, pliEnCours[j], atout) != 1) )
-					// verfie que le partenaire est maitre
-					//NB : si i==taillepli-2, le programme sort de la boucle sans evaluer le second element de la condition,
-					// a notre plus grand bonheur puisque comparer( carte, carte, atout ) renvoie 0 lorsque les cartes en entree sont egales.
-					{
-						t3=0;
-					}
-				}
+                for(int j=0; j<taillepli; j++)
+                {
+                    if(j!=taillepli-2)
+                    {
+                        if( comparer(Partenaire, pliEnCours[j], atout) == 1 )
+                        // verfie que le partenaire est maitre
+                        //NB : si i==taillepli-2, le programme sort de la boucle sans evaluer le second element de la condition,
+                        // a notre plus grand bonheur puisque comparer( carte, carte, atout ) renvoie 0 lorsque les cartes en entree sont egales.
+                        {
+
+                            t3&=true;
+                        }
+                        else if( (comparer(Partenaire, pliEnCours[j], atout) == 2) && (Partenaire.get_couleur() == couleurdupli))
+                        {
+
+                            t3&=true;
+                        }
+                        else
+                        {
+
+                            t3=false;
+                        }
+                    }
+                }
+
 			}
 
 			//4�me test : il reste des atouts dans la main
@@ -134,7 +149,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
 			int incr6=0;
 			while(incr6<taillepli && t6 )
 			{
-				if( (incr6!=taillepli-2) &&  (comparer(carte, pliEnCours[incr6], atout) != 1) )
+				if( (comparer(carte, pliEnCours[incr6], atout) != 1) )
 				{
 					t6=0;
 				}
@@ -159,7 +174,7 @@ int Regles::valeur(const Pli& pli,  const Couleur& atout)
                 //on refait le test 6, mais cette fois-ci avec l'atout le plus fort de la main
                 while(incr7<taillepli && t7 )
                 {
-				if( (incr7!=taillepli-2) &&  (comparer(atoutLePlusFortdeLaMain, pliEnCours[incr7], atout) != 1) )
+				if( comparer(atoutLePlusFortdeLaMain, pliEnCours[incr7], atout) != 1)
 				{
 					t7=0;
 				}
@@ -273,13 +288,13 @@ std::pair<std::vector<Couleur>, std::vector<Hauteur> > Regles::AnnoncesPossibles
 
         if (test_passe && test_passe2 && test_passe3 && test_passe4)
         {
-			
+
             return output; //vecteurs vides
         }
         hauteurs.push_back(PASSE); //on peut toujours passer! youhou!
         if (test_passe && test_passe2 && test_passe3 && !test_passe4 )
         {
-			
+
             Couleur couleurInterdite = encheresEnCours[encheresEnCours.size()-4].get_couleur();
             for(unsigned int i=0; i<4; i++)
             {
@@ -293,7 +308,7 @@ std::pair<std::vector<Couleur>, std::vector<Hauteur> > Regles::AnnoncesPossibles
         }
 		else
 		{
-			
+
 			for(unsigned int i=0; i<4; i++)
 			{
 				couleurs.push_back(couleursDeBase[i]);

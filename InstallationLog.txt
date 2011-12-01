@@ -1,0 +1,4 @@
+*************************************Invoked:jeu. 1. déc. 18:18:15 2011Operations start: 5138124782428049496; Operations end: 6361139075269017936; Resource count: 0; Data block size: 32; Magic marker: 302133812; Magic cookie: 14007050384008702200; Index size: 48; End of data: 15081504
+Number of operations: 0
+Error-Exception: "Could not open settings file :/metadata/installer-config/config.xml for reading: Unknown error" 
+Could not parse Config: Could not open settings file :/metadata/installer-config/config.xml for reading: Unknown error

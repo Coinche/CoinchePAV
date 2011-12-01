@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "windows.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,9 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //configuration des objets metier
     joueur_principal.set_joueurHG(this);
     kebab.set_donneurGraphique(this);
-    kebab.set_joueurs(&joueur_principal, npp, npp+1, npp+2);
+    npp[0] = new IA_intermediate();
+    npp[1] = new IA_intermediate();
+    npp[2] = new IA_intermediate();
+    kebab.set_joueurs(&joueur_principal, npp[0], npp[1], npp[2]);
     for(int i=0; i<3; i++)
-        npp[i].set_donneur(&kebab);
+        npp[i]->set_donneur(&kebab);
 
     //Adressage des différentes Carte + mappage couleur pour pouvoir boucler/accéder rapidement
     Pli_Joueur[0] = ui->Pli_Joueur0;
@@ -156,7 +160,7 @@ void MainWindow::ramasserPli()
 
 //JoueurHumainGraphique
 
-    int MainWindow::afficherMainEtJouer(Main main,std::vector<bool> jouable)
+int MainWindow::afficherMainEtJouer(Main main,std::vector<bool> jouable)
     {
         afficherMain(main,jouable);
         QEventLoop myLoop;

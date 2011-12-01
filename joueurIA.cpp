@@ -52,9 +52,8 @@ Hauteur IA_intermediate::estimerValeurDeLaMain(const Couleur& atout)
             if (main[idx_carte].get_valeur() == AS) compteur+=10 ;
         }
 
-        if(belote && rebelote) compteur+=20;
-
     }
+    if(belote && rebelote) compteur+=20;
     return (compteur>80) ? (Hauteur) compteur : PASSE;
 }
 
@@ -91,7 +90,7 @@ Hauteur IA_intermediate::estimerValeurMainAvecPartner(const Couleur& couleurdema
 
 Annonce IA_intermediate::MaximiserlAnnonceInitiale()
 {
-	Hauteur hauteurPourAnnonce = PASSE;
+    Hauteur hauteurPourAnnonce = PASSE;
     Couleur couleurPourAnnonce = COEUR;
 	for(int idx_couleur = 0; idx_couleur < 3; idx_couleur++ )
 	{
@@ -135,7 +134,7 @@ Annonce IA_intermediate::reflechirEtAnnoncer(const  std::pair<std::vector<Couleu
     //Cas où l'IA est la première a annoncer
     if(encheres.empty())
     {
-		Annonce annonceInitiale = MaximiserlAnnonceInitiale();
+        Annonce annonceInitiale = MaximiserlAnnonceInitiale();
         return ( annonceInitiale>Annonce(QUATRE_VINGT,COEUR) ) ? annonceInitiale : Annonce(PASSE,COEUR); //on ne surenchérit que si notre enchère est supérieure à 80
     }
 
@@ -158,7 +157,7 @@ Annonce IA_intermediate::reflechirEtAnnoncer(const  std::pair<std::vector<Couleu
 		if( encherespartner.empty() || encherespartner.back().get_hauteur() == PASSE )
 		{
 			Annonce annonceInitiale = MaximiserlAnnonceInitiale();
-        	return (annonceInitiale>encheres.back()) ? annonceInitiale : Annonce(PASSE,COEUR); //on ne surenchérit que si notre enchère est supérieure à 80 et 
+                        return (annonceInitiale>encheres.back()) ? annonceInitiale : Annonce(PASSE,COEUR); //on ne surenchérit que si notre enchère est supérieure à 80 et
 		}
 		else // le partenaire a annoncé avant nous -> on le remonte de sa couleur
 		{
@@ -175,11 +174,10 @@ Annonce IA_intermediate::reflechirEtAnnoncer(const  std::pair<std::vector<Couleu
 	{
 		Couleur couleurdeladerniereAnnonceIA = encheresIA.back().get_couleur();
 		Couleur couleurdemandeeparpartner = encherespartner.back().get_couleur();
-		if(couleurdemandeeparpartner == couleurdeladerniereAnnonceIA) return Annonce(PASSE, COEUR ); // on reste dans la même couleur -> on est déjà au maximum que l'on peut annoncer
+                if(couleurdemandeeparpartner == couleurdeladerniereAnnonceIA || encherespartner.back().get_hauteur() == PASSE ) return Annonce(PASSE, COEUR ); // on reste dans la même couleur -> on est déjà au maximum que l'on peut annoncer
 		else
 		{
 			//Le partenaire a changé de couleur : on lui fait confiance et on remonte de dix seulement si l'adversaire n'a pas remonté entre temps
-			Hauteur estimation = estimerValeurMainAvecPartner(couleurdemandeeparpartner);
 			int hauteurajoutee = encherespartner.back().get_hauteur() + 10;
 			Annonce NouvelleAnnonce( (Hauteur) hauteurajoutee, couleurdemandeeparpartner);
 			return (NouvelleAnnonce > encheres.back() ) ? NouvelleAnnonce : Annonce(PASSE,COEUR);

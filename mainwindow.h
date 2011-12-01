@@ -72,7 +72,8 @@ private:
     int lastbutton_clicked;
 
     JoueurHumain joueur_principal;
-    IA_dummy npp[3];
+    IA* npp[3];
+
     Doner kebab;
 
 private:
