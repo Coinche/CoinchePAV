@@ -1,0 +1,15 @@
+Réunion PAV
+
+Boulot à faire :
+
+	Coder : 
+		Donneur.get_main(numéro) avec numéro = position du joueur ( 0 = joueur qui démarre, ...)
+		
+		
+	Prototype : 
+		ReflechirEtJoueur( const Pli& PliEnCours, const Couleur& atout);  // dans joueurIA
+		
+	Main : sans doute faire une véritable classe dédiée.
+		Main.get_couleur( const Couleur& couleur);
+		
+		

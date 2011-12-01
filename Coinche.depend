@@ -1,0 +1,192 @@
+# depslib dependency file v1.0
+1322424401 source:c:\users\lucas\coinchepav\annonce.cpp
+	"annonce.h"
+
+1322609792 "
+
+1322424401 c:\users\lucas\coinchepav\annonce.h
+	<vector>
+	"types.h"
+
+1322580675 
+
+1322505541 c:\users\lucas\coinchepav\types.h
+
+1322505541 source:c:\users\lucas\coinchepav\carte.cpp
+	"carte.h"
+
+1322573014 c:\users\lucas\coinchepav\carte.h
+	<vector>
+	"types.h"
+	"mmain.h"
+
+1322605825 c:\users\lucas\coinchepav\mmain.h
+	<vector>
+	"carte.h"
+
+1322607614 source:c:\users\lucas\coinchepav\donneur.cpp
+	"donneur.h"
+	<iostream>
+	<algorithm>
+	<cmath>
+	<ctime>
+	"regles.h"
+
+1322607614 c:\users\lucas\coinchepav\donneur.h
+	"regles.h"
+	"joueur.h"
+	"donneurGraphique.h"
+
+1322607614 aphique.h"
+
+1322612254 c:\users\lucas\coinchepav\regles.h
+	"types.h"
+	"carte.h"
+	"annonce.h"
+	<map>
+	<vector>
+
+1322584498 c:\users\lucas\coinchepav\joueur.h
+	"carte.h"
+	"annonce.h"
+
+1322497548 c:\users\lucas\coinchepav\donneurgraphique.h
+	"annonce.h"
+	"carte.h"
+
+1322505541 source:c:\users\lucas\coinchepav\joueur.cpp
+	"joueur.h"
+
+1322580726 source:c:\users\lucas\coinchepav\joueuria.cpp
+	"joueurIA.h"
+	<cstdlib>
+	<ctime>
+	<algorithm>
+
+1322612357 >
+
+1322580675 c:\users\lucas\coinchepav\joueuria.h
+	"joueur.h"
+	"carte.h"
+	"annonce.h"
+	"regles.h"
+
+1322605828 source:c:\users\lucas\coinchepav\mmain.cpp
+	"mmain.h"
+	<algorithm>
+
+1322612141 source:c:\users\lucas\coinchepav\debugage.cpp
+	<iostream>
+	<fstream>
+	<exception>
+	<string>
+	<assert.h>
+	"debugage.h"
+
+1322612141 h"
+
+1322612127 c:\users\lucas\coinchepav\debugage.h
+	"types.h"
+	"annonce.h"
+	"regles.h"
+	"carte.h"
+	"mmain.h"
+	"donneur.h"
+
+1322609792 source:c:\users\lucas\coinchepav\main.cpp
+	<iostream>
+	<exception>
+	"types.h"
+	"annonce.h"
+	"debugage.h"
+	"donneur.h"
+
+1322612357 source:c:\users\lucas\coinchepav\regles.cpp
+	"regles.h"
+	<algorithm>
+
+1321518838 source:/media/Windows/Users/Lucas/CoinchePAV/main.cpp
+	<QtGui/QApplication>
+	"mainwindow.h"
+	"donneurgraphique.h"
+
+1322685652 /media/Windows/Users/Lucas/CoinchePAV/mainwindow.h
+	<QMainWindow>
+	<QMessageBox>
+	<QLabel>
+	<QMap>
+	<QString>
+	<QPushButton>
+	<QRadioButton>
+	"donneurgraphique.h"
+	"joueurhumaingraphique.h"
+	"joueuriagraphique.h"
+	"startdialog.h"
+	"joueurHumain.h"
+	"joueurIA.h"
+	"donneur.h"
+
+1322684262 /media/Windows/Users/Lucas/CoinchePAV/donneurgraphique.h
+	"annonce.h"
+	"carte.h"
+
+1322654520 /media/Windows/Users/Lucas/CoinchePAV/annonce.h
+	<vector>
+	"types.h"
+
+1322573882 /media/Windows/Users/Lucas/CoinchePAV/types.h
+
+1322660302 /media/Windows/Users/Lucas/CoinchePAV/carte.h
+	<vector>
+	"types.h"
+	"mmain.h"
+
+1322668486 /media/Windows/Users/Lucas/CoinchePAV/mmain.h
+	<vector>
+	"carte.h"
+
+1322665588 /media/Windows/Users/Lucas/CoinchePAV/joueurhumaingraphique.h
+	"carte.h"
+	"annonce.h"
+
+1322411282 /media/Windows/Users/Lucas/CoinchePAV/joueuriagraphique.h
+	"carte.h"
+
+1322120316 /media/Windows/Users/Lucas/CoinchePAV/startdialog.h
+	<QDialog>
+
+1322717578 /media/Windows/Users/Lucas/CoinchePAV/joueurHumain.h
+	"mmain.h"
+	"annonce.h"
+	"joueur.h"
+	"joueurhumaingraphique.h"
+
+1322717578 /media/Windows/Users/Lucas/CoinchePAV/joueur.h
+	"carte.h"
+	"annonce.h"
+
+1322717608 /media/Windows/Users/Lucas/CoinchePAV/joueurIA.h
+	"joueur.h"
+	"carte.h"
+	"annonce.h"
+	"regles.h"
+	"donneur.h"
+
+1322654880 /media/Windows/Users/Lucas/CoinchePAV/regles.h
+	"types.h"
+	"carte.h"
+	"annonce.h"
+	<map>
+	<vector>
+
+1322718386 /media/Windows/Users/Lucas/CoinchePAV/donneur.h
+	"regles.h"
+	"joueur.h"
+	"donneurgraphique.h"
+
+1322654520 source:/media/Windows/Users/Lucas/CoinchePAV/annonce.cpp
+	"annonce.h"
+
+1322654520 source:/media/Windows/Users/Lucas/CoinchePAV/carte.cpp
+	"carte.h"
+

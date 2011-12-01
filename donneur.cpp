@@ -84,28 +84,12 @@ void Donneur::jouerUnTour()
 {
 	distribuer();
 	int joueurCourant=premier;
-<<<<<<< HEAD
         encheres.clear();
 
 	while(Regles::AnnoncesPossibles(encheres).first.size()!=0)
 	{
 		encheres.push_back(joueurs[joueurCourant]->annoncer(encheres));
                 donneurGraphique->afficherAnnonce(joueurCourant, encheres.back());
-=======
-	
-	//! Attention debug!!! FIXME
-	encheres.push_back(Annonce(CAPOT, TREFLE));
-	encheres.push_back(Annonce(PASSE, PIQUE));
-	encheres.push_back(Annonce(PASSE, PIQUE));
-	encheres.push_back(Annonce(PASSE, PIQUE));
-	//!
-	
-	
-	while(Regles::AnnoncesPossibles(encheres).first.size()!=0)
-	{
-		encheres.push_back(joueurs[joueurCourant]->annoncer(encheres));
-		//donneurGraphique->rafraichir(encheres.back(), joueurCourant);
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
 		if(joueurCourant == 3) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 	}
         if(encheres.size() == 4) return;
@@ -160,18 +144,13 @@ void Donneur::distribuer()
 int Donneur::jouerUnPli(int entame)
 {
 	int joueurCourant = entame;
-<<<<<<< HEAD
         pliEnCours.clear();
-=======
-	Pli pliEnCours;
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
 	
 	for(int i=0; i<4; i++)
 	{
 		pliEnCours.push_back(joueurs[joueurCourant]->jouer(atout, pliEnCours));
 		
 		plisRamasses.push_back(pliEnCours.back());
-<<<<<<< HEAD
                 donneurGraphique->afficherCarte(joueurCourant,pliEnCours.back());
 		if(joueurCourant == 3) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
 	}
@@ -182,21 +161,10 @@ int Donneur::jouerUnPli(int entame)
 	
         if(maitre_index%2 == 0)
                 scores_tmp[attaque] += Regles::valeur(pliEnCours, atout);
-=======
-		//donneurGraphique->rafraichir(carteCourante, joueurCourant);
-		if(joueurCourant == 3) joueurCourant = 0; else joueurCourant++; // incrementation modulo 4
-	}
-	
-	int maitre_index = get_maitre(pliEnCours);
-	
-	if(maitre_index%2 == 0)
-		scores_tmp[premier%2] += Regles::valeur(pliEnCours, atout);
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
 	else
                 scores_tmp[defense] += Regles::valeur(pliEnCours, atout);
 	
 	return maitre_index;
-<<<<<<< HEAD
 }
 
 int Donneur::get_maitre(const Pli& pliEnCours)
@@ -208,28 +176,10 @@ int Donneur::get_maitre(const Pli& pliEnCours)
 			
         int tmp = (int)(maitre - pliEnCours.begin());
         return tmp;
-=======
-	//donneurGraphique->ramasserPli();
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
-}
-
-int Donneur::get_maitre(const Pli& pliEnCours)
-{
-	Pli::const_iterator maitre=pliEnCours.begin();
-	for(Pli::const_iterator it=pliEnCours.begin(); it < pliEnCours.end(); it++)
-		if(Regles::comparer(*maitre,*it,atout)==0)
-			maitre=it;
-			
-	return (maitre - pliEnCours.begin());
 }
 
 void Donneur::compter()
 {
-<<<<<<< HEAD
-=======
-	int attaque = (premier + encheres.size() - 1) % 2;
-	int defense = 1 - attaque;
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
 	Hauteur pointsAnnonces = (encheres.end()-5)->get_hauteur();
 	if(pointsAnnonces == CAPOT && scores_tmp[defense] == 0)
 		scores[attaque] += pointsAnnonces;
@@ -239,21 +189,6 @@ void Donneur::compter()
 		scores[attaque] += pointsAnnonces;
 	else
 		scores[defense] += pointsAnnonces;
-<<<<<<< HEAD
-}
-
-void Donneur::compterLaBelote(int joueurCourant)
-{
-	for(int i = 0; i<4; i+=2)
-		if(joueurs[(joueurCourant+i)%4]->get_main().contient(Carte(DAME,atout))
-		&& joueurs[(joueurCourant+i)%4]->get_main().contient(Carte(ROI,atout))
-		)
-			scores_tmp[joueurCourant%2]+=20;
-=======
-	
-	scores_tmp[0]=0;
-	scores_tmp[1]=0;
->>>>>>> 724574f908be7f7cad89d404f7c1f8c54b5cda57
 }
 
 void Donneur::compterLaBelote(int joueurCourant)
